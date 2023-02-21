@@ -1,9 +1,9 @@
+import React from "react";
 import { Button, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useForm, Resolver } from "react-hook-form";
-import * as apiService from "../api-service";
-
 import { useNavigate } from "react-router-dom";
+import * as apiService from "../api-service";
 import * as Types from "../@types";
 
 const resolver: Resolver<FormValues> = async (values) => {
@@ -33,6 +33,7 @@ type FormValues = {
 };
 
 export default function Signin() {
+  const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
 
   let user: Types.User = JSON.parse(localStorage.getItem("@user") || "{}");
@@ -44,14 +45,23 @@ export default function Signin() {
   } = useForm<FormValues>({ resolver });
 
   const onSubmit = handleSubmit(async (data) => {
-    await apiService.signIn({
-      email: data.email,
-      password: data.password,
-    });
-
-    navigate("/");
+    setLoading(true);
+    await apiService
+      .signIn({
+        email: data.email,
+        password: data.password,
+      })
+      .then((result) => {
+        console.log(result);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    setLoading(false);
   });
   const signOut = async () => {
+    setLoading(true);
     apiService
       .revokeToken(user.uid)
       .then((result) => {
@@ -61,6 +71,7 @@ export default function Signin() {
       .catch((err) => {
         console.log("Revoke token Error", err);
       });
+    setLoading(false);
   };
 
   if (user.token) {
@@ -130,6 +141,12 @@ export default function Signin() {
             Go to index
           </Button>
         </Link>
+
+        {loading && (
+          <Box sx={{ fontSize: "20px", fontWeight: "bold", mt: 3 }}>
+            ...Loading
+          </Box>
+        )}
       </form>
     );
   }

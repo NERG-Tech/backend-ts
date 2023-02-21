@@ -1,3 +1,4 @@
+import React from "react";
 import { Button, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useForm, Resolver } from "react-hook-form";
@@ -40,6 +41,7 @@ type FormValues = {
 };
 
 export default function Signup() {
+  const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
   const {
     register,
@@ -51,14 +53,25 @@ export default function Signup() {
   console.log("user", user);
 
   const onSubmit = handleSubmit(async (data) => {
-    await apiService.signUp({
-      email: data.email,
-      password: data.password,
-      secureNote: data.secureNote,
-    });
+    setLoading(true);
+    await apiService
+      .signUp({
+        email: data.email,
+        password: data.password,
+        secureNote: data.secureNote,
+      })
+      .then((result) => {
+        console.log(result);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    setLoading(false);
   });
 
   const signOut = async () => {
+    setLoading(true);
     apiService
       .revokeToken(user.uid)
       .then((result) => {
@@ -68,6 +81,7 @@ export default function Signup() {
       .catch((err) => {
         console.log("Revoke token Error", err);
       });
+    setLoading(false);
   };
 
   if (user.token) {
@@ -143,6 +157,11 @@ export default function Signup() {
             Go to index
           </Button>
         </Link>
+        {loading && (
+          <Box sx={{ fontSize: "20px", fontWeight: "bold", mt: 3 }}>
+            ...Loading
+          </Box>
+        )}
       </form>
     );
   }
