@@ -37,7 +37,7 @@ export default function Signin() {
   const navigate = useNavigate();
 
   let user: Types.User = JSON.parse(localStorage.getItem("@user") || "{}");
-  console.log("user", user);
+
   const {
     register,
     handleSubmit,

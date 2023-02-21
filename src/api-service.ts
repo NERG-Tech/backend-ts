@@ -60,16 +60,45 @@ export async function validateToken({ userIdToken }: validateUserType) {
   return res.data;
 }
 
-export async function test({ userIdToken }: validateUserType) {
-  const url = `${apiUrl}/test/`;
-  const res = await axios.get(url, {
-    headers: {
-      authorization: `Bearer ${userIdToken}`,
-    },
-  });
-  console.log("res.data", res.data);
-  return res.data;
+export async function addPlayer(obj: {
+  sex: string;
+  age: number;
+  weight: number;
+  height: number;
+  name: string;
+  sport: string;
+  position: string;
+  accessToken: string;
+}) {
+  const url = `${apiUrl}/player`;
+  let res;
+  console.log("obj.accessToken", obj.accessToken);
+  if (obj.accessToken) {
+    try {
+      res = await axios.post(url, {
+        ...obj,
+        headers: { authorization: `Bearer ${obj.accessToken}` },
+      });
+      console.log(res);
+      return res.data;
+    } catch (error: any) {
+      console.error(error.data);
+    }
+  } else {
+    return "no-access";
+  }
 }
+
+// export async function test({ userIdToken }: validateUserType) {
+//   const url = `${apiUrl}/test/`;
+//   const res = await axios.get(url, {
+//     headers: {
+//       authorization: `Bearer ${userIdToken}`,
+//     },
+//   });
+//   console.log("res.data", res.data);
+//   return res.data;
+// }
 
 export async function revokeToken(uid: string) {
   console.log("uid,", uid);
@@ -81,49 +110,10 @@ export async function revokeToken(uid: string) {
   return res.data;
 }
 
-type getUserDataType = { userIdToken: string; userId: string };
-
-export async function getUserData({ userIdToken, userId }: getUserDataType) {
-  console.log({ userIdToken, userId });
-  const url = `${apiUrl}/users/${userId}`;
-  const res = await axios.get(url, {
-    headers: {
-      Authorization: `Bearer ${userIdToken}`,
-    },
-  });
-  return res.data;
-}
-
 export async function getPlayer() {
   const url = `${apiUrl}/player`;
   const res = await axios.get(url, {});
   return res.data;
-}
-
-// export async function signout(userId: string) {
-//   const url = `${apiUrl}/signout/${userId}`;
-//   const res = await axios.post(url);
-//   return res.data;
-// }
-export async function addPlayer(obj: {
-  sex: string;
-  age: number;
-  weight: number;
-  height: number;
-  name: string;
-  sport: string;
-  position: string;
-}) {
-  const url = `${apiUrl}/player`;
-  let res;
-
-  try {
-    res = await axios.post(url, obj);
-    console.log(res);
-    return res.data;
-  } catch (error: any) {
-    console.error(error.data);
-  }
 }
 
 export async function addWaistAndHip(waist: number, hip: number) {
