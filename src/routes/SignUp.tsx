@@ -1,14 +1,9 @@
-import React, { useState } from "react";
 import { Button, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useForm, Resolver } from "react-hook-form";
 import * as apiService from "../api-service";
-import {
-  getAuth,
-  signInWithCustomToken,
-  signOut as firebaseSignOut,
-} from "firebase/auth";
 
+import * as Types from "../@types";
 const resolver: Resolver<FormValues> = async (values) => {
   return {
     values: values.email && values.password && values.secureNote ? values : {},
@@ -43,41 +38,30 @@ type FormValues = {
   secureNote: string;
 };
 
-export interface userType {
-  accessToken: string;
-  email: string;
-  uid: string;
-}
 export default function Signup() {
-  const auth = getAuth();
-  const [user, setUser] = useState<userType | any>(auth.currentUser);
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>({ resolver });
 
-  console.log("user in signup", user);
+  let user: Types.User = JSON.parse(localStorage.getItem("@user") || "{}");
+  console.log("user", user);
 
   const onSubmit = handleSubmit(async (data) => {
-    // console.log(data);
     await apiService.signUp({
       email: data.email,
       password: data.password,
       secureNote: data.secureNote,
     });
-
-    const auth = getAuth();
-    if (auth.currentUser) setUser(auth.currentUser);
   });
 
-  const signOut = async () => {
-    await apiService.revokeToken(user.uid);
-    window.location.reload();
-  };
+  //   const signOut = async () => {
+  //     await apiService.revokeToken(user.uid);
+  //     window.location.reload();
+  //   };
 
-  if (user !== null) {
+  if (user.token) {
     return (
       <Box
         sx={{
@@ -91,7 +75,7 @@ export default function Signup() {
       >
         You are signed in. To sign up, you need to sign out.
         <Button
-          onClick={signOut}
+          //   onClick={signOut}
           style={{ border: "1px solid lightgrey", marginTop: "30px" }}
         >
           Sign out

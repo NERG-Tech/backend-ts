@@ -1,13 +1,10 @@
-import React, { useState } from "react";
 import { Button, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useForm, Resolver } from "react-hook-form";
 import * as apiService from "../api-service";
-import {
-  getAuth,
-  signInWithCustomToken,
-  signOut as firebaseSignOut,
-} from "firebase/auth";
+
+import { useNavigate } from "react-router-dom";
+import * as Types from "../@types";
 
 const resolver: Resolver<FormValues> = async (values) => {
   return {
@@ -35,40 +32,38 @@ type FormValues = {
   password: string;
 };
 
-export interface userType {
-  accessToken: string;
-  email: string;
-  uid: string;
-}
 export default function Signin() {
-  const auth = getAuth();
-  const [user, setUser] = useState<userType | any>(auth.currentUser);
+  const navigate = useNavigate();
 
+  let user: Types.User = JSON.parse(localStorage.getItem("@user") || "{}");
+  console.log("user", user);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>({ resolver });
 
-  console.log("user in signin", user);
-
   const onSubmit = handleSubmit(async (data) => {
-    // console.log(data);
     await apiService.signIn({
       email: data.email,
       password: data.password,
     });
 
-    const auth = getAuth();
-    if (auth.currentUser) setUser(auth.currentUser);
+    navigate("/");
   });
-
   const signOut = async () => {
-    await apiService.revokeToken(user.uid);
-    window.location.reload();
+    apiService
+      .revokeToken(user.uid)
+      .then((result) => {
+        console.log("Revoke token", result);
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log("Revoke token Error", err);
+      });
   };
 
-  if (user !== null) {
+  if (user.token) {
     return (
       <Box
         sx={{
