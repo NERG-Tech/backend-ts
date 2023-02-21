@@ -12,7 +12,6 @@ export async function signIn({ email, password }: signInType) {
   const url = `${apiUrl}/login`;
   const res = await axios.post(url, { email, password });
 
-  //   console.log(res.data);
   localStorage.setItem(
     "@user",
     JSON.stringify({
@@ -35,7 +34,12 @@ export async function signUp(obj: {
 
   localStorage.setItem(
     "@user",
-    JSON.stringify({ token: res.data.token, uid: res.data.uid })
+    JSON.stringify({
+      token: res.data.token,
+      uid: res.data.uid.user.uid,
+      stsTokenManager: res.data.uid.user.stsTokenManager,
+      accessToken: res.data.uid.user.stsTokenManager.accessToken,
+    })
   );
   return res.data;
 }

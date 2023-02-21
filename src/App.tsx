@@ -7,6 +7,7 @@ function App() {
   let user: Types.User = JSON.parse(localStorage.getItem("@user") || "{}");
   console.log("user", user);
 
+  // localStorage.removeItem("@user");
   return (
     <Box className="App" sx={{ pt: 10 }}>
       <Box sx={{ pb: 3 }}>

@@ -9,11 +9,6 @@ import SignIn from "./routes/SignIn";
 import AddPlayer from "./routes/AddPlayer";
 import ShowPlayer from "./routes/ShowPlayer";
 
-import { initializeApp } from "firebase/app";
-import firebaseConfig from "./firebase.config";
-
-initializeApp(firebaseConfig);
-
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );

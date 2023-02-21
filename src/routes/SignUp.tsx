@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useForm, Resolver } from "react-hook-form";
 import * as apiService from "../api-service";
 
+import { useNavigate } from "react-router-dom";
 import * as Types from "../@types";
 const resolver: Resolver<FormValues> = async (values) => {
   return {
@@ -39,6 +40,7 @@ type FormValues = {
 };
 
 export default function Signup() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -56,10 +58,17 @@ export default function Signup() {
     });
   });
 
-  //   const signOut = async () => {
-  //     await apiService.revokeToken(user.uid);
-  //     window.location.reload();
-  //   };
+  const signOut = async () => {
+    apiService
+      .revokeToken(user.uid)
+      .then((result) => {
+        console.log("Revoke token", result);
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log("Revoke token Error", err);
+      });
+  };
 
   if (user.token) {
     return (
@@ -75,7 +84,7 @@ export default function Signup() {
       >
         You are signed in. To sign up, you need to sign out.
         <Button
-          //   onClick={signOut}
+          onClick={signOut}
           style={{ border: "1px solid lightgrey", marginTop: "30px" }}
         >
           Sign out
