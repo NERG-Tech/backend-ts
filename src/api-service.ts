@@ -16,6 +16,7 @@ export async function signIn({ email, password }: signInType) {
       accessToken: res.data.uid.user.stsTokenManager.accessToken,
       expirationTime: res.data.uid.user.stsTokenManager.expirationTime,
       refreshToken: res.data.uid.user.stsTokenManager.refreshToken,
+      expired: res.data.uid._tokenResponse.expiresIn,
     })
   );
   return res.data;
@@ -35,6 +36,9 @@ export async function signUp(obj: {
     JSON.stringify({
       uid: res.data.uid.user.uid,
       accessToken: res.data.uid.user.stsTokenManager.accessToken,
+      expirationTime: res.data.uid.user.stsTokenManager.expirationTime,
+      refreshToken: res.data.uid.user.stsTokenManager.refreshToken,
+      expired: res.data.uid._tokenResponse.expiresIn,
     })
   );
   return res.data;

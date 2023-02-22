@@ -1,4 +1,11 @@
-export type User = { token: string; uid: string; accessToken: string };
+export type User = {
+  token: string;
+  uid: string;
+  accessToken: string;
+  expirationTime: number;
+  expired: number;
+  refreshToken: string;
+};
 export type tokenType = {
   accessToken: string;
 };

@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Button, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useForm, Resolver } from "react-hook-form";
 import * as apiService from "../api-service";
 import * as Types from "../@types";
-import axios from "axios";
 
 const resolver: Resolver<FormValues> = async (values) => {
   return {

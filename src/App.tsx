@@ -48,6 +48,14 @@ function App() {
         <Link to="/add-met">
           <Button sx={{ border: "1px solid lightgrey", ml: 1 }}>Add MET</Button>
         </Link>
+
+        <Box sx={{ pt: 2 }}>
+          <Link to="/user-token-status">
+            <Button sx={{ border: "1px solid lightgrey", ml: 1 }}>
+              Check User Token Status
+            </Button>
+          </Link>
+        </Box>
       </Box>
     </Box>
   );
