@@ -46,11 +46,18 @@ export default function AddWaistHip() {
   const onSubmit = handleSubmit(async (data) => {
     // console.log({ ...data });
     if (user.accessToken) {
+      //   await apiService
+      //     .validateToken({ userIdToken: user.accessToken })
+      //     .then((result) => {
+      //       console.log("result", result);
+      //     })
+      //     .catch((error) => console.log(error));
+
       await apiService
         .addWaistAndHip(data.waist, data.hip, user.accessToken)
         .then((result) => {
           console.log("result", result);
-          setList(result.ratio);
+          if (result) setList(result.ratio);
         })
         .catch((error) => console.log(error));
     } else {

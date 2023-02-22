@@ -35,39 +35,10 @@ type FormValues = {
   sport: string;
   position: string;
 };
-// height
-type heightFeetType = { feet: number; inch: number };
-type heightType = { cm: number; mt: number; feet: heightFeetType };
 
-// weight
-type weightType = { kg: number; pounds: number };
-
-type adjustedBodyWeightType = { kg: number; pounds: number };
-type bloodVolumnType = { value: number; unit: string };
-type bodyWaterWeightType = { kg: number; pounds: number };
-type idealWeightType = { kg: number; pounds: number };
-type leanBodyMassType = { kg: number; pounds: number };
-type rmrType = { value: number; unit: string };
-
-type localListType = {
-  age: number;
-  bmi: number;
-  sex: string;
-  height: heightType;
-  weight: weightType;
-  adjustedBodyWeight: adjustedBodyWeightType;
-  bloodVolumn: bloodVolumnType;
-  bodyWaterWeight: bodyWaterWeightType;
-  idealWeight: idealWeightType;
-  leanBodyMass: leanBodyMassType;
-  name: string;
-  position: string;
-  rmr: rmrType;
-  sport: string;
-};
 export default function Signin() {
   const [error, setError] = React.useState("");
-  const [localList, setList] = React.useState<localListType>();
+  const [localList, setList] = React.useState<Types.localListType>();
 
   let user: Types.User = JSON.parse(localStorage.getItem("@user") || "{}");
   const {

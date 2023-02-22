@@ -12,7 +12,7 @@ function App() {
     <Box className="App" sx={{ pt: 10 }}>
       <Box sx={{ pb: 3 }}>
         User Status:{" "}
-        {user.token ? (
+        {user.accessToken ? (
           <Box sx={{ pt: 2, color: "green" }}>User Signed In</Box>
         ) : (
           <Box sx={{ pt: 2, color: "red" }}>Not Signed In</Box>

@@ -1,9 +1,5 @@
 import axios from "axios";
-// import {
-//   getAuth,
-//   signInWithCustomToken,
-//   signOut as firebaseSignOut,
-// } from "firebase/auth";
+import * as Types from "./@types";
 const apiUrl = `https://us-central1-nerg-one.cloudfunctions.net/api`;
 
 type signInType = { email: string; password: string };
@@ -15,9 +11,7 @@ export async function signIn({ email, password }: signInType) {
   localStorage.setItem(
     "@user",
     JSON.stringify({
-      token: res.data.token,
       uid: res.data.uid.user.uid,
-      stsTokenManager: res.data.uid.user.stsTokenManager,
       accessToken: res.data.uid.user.stsTokenManager.accessToken,
     })
   );
@@ -35,9 +29,7 @@ export async function signUp(obj: {
   localStorage.setItem(
     "@user",
     JSON.stringify({
-      token: res.data.token,
       uid: res.data.uid.user.uid,
-      stsTokenManager: res.data.uid.user.stsTokenManager,
       accessToken: res.data.uid.user.stsTokenManager.accessToken,
     })
   );
@@ -49,8 +41,12 @@ type validateUserType = {
 };
 
 export async function validateToken({ userIdToken }: validateUserType) {
-  //   console.log(userIdToken);
   const url = `${apiUrl}/user/validateToken/`;
+  console.log("bearer", {
+    headers: {
+      authorization: `Bearer ${userIdToken}`,
+    },
+  });
   const res = await axios.get(url, {
     headers: {
       authorization: `Bearer ${userIdToken}`,
@@ -72,18 +68,42 @@ export async function addPlayer(obj: {
 }) {
   const url = `${apiUrl}/player`;
   let res;
-  //   console.log("obj.accessToken", obj.accessToken);
   if (obj.accessToken) {
     try {
       res = await axios.post(url, {
         ...obj,
-        accessToken: obj.accessToken,
+        idToken: obj.accessToken,
       });
       console.log(res);
       return res.data;
     } catch (error: any) {
       console.error(error.data);
     }
+  } else {
+    return "no-access";
+  }
+}
+
+export async function getPlayer(accessToken: Types.tokenType) {
+  const url = `${apiUrl}/player/${accessToken.accessToken}`;
+  const options = {
+    method: "GET",
+    url: url,
+  };
+  let res;
+
+  if (accessToken) {
+    await axios
+      .request(options)
+      .then(function (response: any) {
+        console.log("response.data player", response.data.player);
+        res = response.data.player;
+      })
+      .catch(function (error: any) {
+        // console.error(error);
+        res = error;
+      });
+    return res;
   } else {
     return "no-access";
   }
@@ -98,7 +118,7 @@ export async function addWaistAndHip(
   let obj = {
     waist,
     hip,
-    headers: { authorization: `Bearer ${accessToken}` },
+    idToken: accessToken,
   };
   console.log(obj);
   let res;
@@ -109,34 +129,18 @@ export async function addWaistAndHip(
     return res.data;
   } catch (error: any) {
     console.error(error.data);
+    return error.data;
   }
 }
 
-// export async function test({ userIdToken }: validateUserType) {
-//   const url = `${apiUrl}/test/`;
-//   const res = await axios.get(url, {
-//     headers: {
-//       authorization: `Bearer ${userIdToken}`,
-//     },
-//   });
-//   console.log("res.data", res.data);
-//   return res.data;
-// }
-
 // signout
 export async function revokeToken(uid: string) {
-  console.log("uid,", uid);
+  localStorage.removeItem("@user");
   const url = `${apiUrl}/user/revoke/${uid}`;
   const res = await axios.post(url, {
     uid: uid,
   });
-  localStorage.removeItem("@user");
-  return res.data;
-}
 
-export async function getPlayer() {
-  const url = `${apiUrl}/player`;
-  const res = await axios.get(url, {});
   return res.data;
 }
 

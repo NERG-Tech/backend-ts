@@ -84,7 +84,7 @@ export default function Signup() {
     setLoading(false);
   };
 
-  if (user.token) {
+  if (user.accessToken) {
     return (
       <Box
         sx={{

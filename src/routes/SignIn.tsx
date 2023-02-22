@@ -74,7 +74,7 @@ export default function Signin() {
     setLoading(false);
   };
 
-  if (user.token) {
+  if (user.accessToken) {
     return (
       <Box
         sx={{
