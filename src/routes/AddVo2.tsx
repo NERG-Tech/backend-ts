@@ -24,7 +24,9 @@ type FormValues = {
   hip: number;
 };
 
-type localListType = { pulse: number; hip: number; ratio: number };
+type vo2Type = { pulse: number; vo2: number; unit: string };
+type localListType = { vo2: vo2Type };
+
 export default function AddpulseHip() {
   const [error, setError] = React.useState("");
   const [localList, setList] = React.useState<localListType>();
@@ -43,7 +45,7 @@ export default function AddpulseHip() {
         .addVo2(data.pulse, user.accessToken)
         .then((result) => {
           console.log("result", result);
-          if (result) setList(result);
+          if (result) setList(result.list);
         })
         .catch((error) => console.log(error));
     } else {
@@ -88,9 +90,10 @@ export default function AddpulseHip() {
       <div>
         {localList && (
           <Box sx={{ pt: 3, lineHeight: "180%" }}>
-            {/* <Box>Hip: {localList.hip}</Box>
-            <Box>pulse: {localList.pulse}</Box>
-            <Box>Ratio: {localList.ratio}</Box> */}
+            <Box>Pulse (input): {localList.vo2.pulse}</Box>
+            <Box>
+              vo2 (result): {localList.vo2.vo2} {localList.vo2.unit}
+            </Box>
           </Box>
         )}
       </div>
