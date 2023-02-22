@@ -28,6 +28,11 @@ function App() {
         <Link to="/add-player">
           <Button sx={{ border: "1px solid lightgrey" }}>Add a player</Button>
         </Link>
+        <Link to="/add-waist-hip">
+          <Button sx={{ border: "1px solid lightgrey", ml: 1 }}>
+            Add waist/hip ratio
+          </Button>
+        </Link>
         <Link to="/show-player">
           <Button sx={{ border: "1px solid lightgrey", ml: 1 }}>
             Get Player Info

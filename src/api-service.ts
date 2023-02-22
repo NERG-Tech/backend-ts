@@ -72,12 +72,12 @@ export async function addPlayer(obj: {
 }) {
   const url = `${apiUrl}/player`;
   let res;
-  console.log("obj.accessToken", obj.accessToken);
+  //   console.log("obj.accessToken", obj.accessToken);
   if (obj.accessToken) {
     try {
       res = await axios.post(url, {
         ...obj,
-        headers: { authorization: `Bearer ${obj.accessToken}` },
+        accessToken: obj.accessToken,
       });
       console.log(res);
       return res.data;
@@ -86,6 +86,29 @@ export async function addPlayer(obj: {
     }
   } else {
     return "no-access";
+  }
+}
+
+export async function addWaistAndHip(
+  waist: number,
+  hip: number,
+  accessToken: string
+) {
+  const url = `${apiUrl}/player/wh`;
+  let obj = {
+    waist,
+    hip,
+    headers: { authorization: `Bearer ${accessToken}` },
+  };
+  console.log(obj);
+  let res;
+
+  try {
+    res = await axios.post(url, obj);
+    console.log("res", res);
+    return res.data;
+  } catch (error: any) {
+    console.error(error.data);
   }
 }
 
@@ -100,6 +123,7 @@ export async function addPlayer(obj: {
 //   return res.data;
 // }
 
+// signout
 export async function revokeToken(uid: string) {
   console.log("uid,", uid);
   const url = `${apiUrl}/user/revoke/${uid}`;
@@ -116,19 +140,6 @@ export async function getPlayer() {
   return res.data;
 }
 
-export async function addWaistAndHip(waist: number, hip: number) {
-  const url = `${apiUrl}/player/wh`;
-  let obj = { waist, hip };
-  let res;
-
-  try {
-    res = await axios.post(url, obj);
-    return res.data;
-  } catch (error: any) {
-    console.error(error.data); // NOTE - use "error.response.data` (not "error")
-  }
-}
-
 export async function getVo2(pulse: number) {
   const url = `${apiUrl}/player/vo2`;
   let obj = { pulse };
@@ -138,7 +149,7 @@ export async function getVo2(pulse: number) {
     res = await axios.post(url, obj);
     return res.data;
   } catch (error: any) {
-    console.error(error.data); // NOTE - use "error.response.data` (not "error")
+    console.error(error.data);
   }
 }
 
@@ -151,7 +162,7 @@ export async function getMET(minutes: number, seconds: number) {
     res = await axios.post(url, obj);
     return res.data;
   } catch (error: any) {
-    console.error(error.data); // NOTE - use "error.response.data` (not "error")
+    console.error(error.data);
   }
 }
 
@@ -178,6 +189,6 @@ export async function getKeyMeasurements(
     res = await axios.post(url, obj);
     return res.data;
   } catch (error: any) {
-    console.error(error.data); // NOTE - use "error.response.data` (not "error")
+    console.error(error.data);
   }
 }

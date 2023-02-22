@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useForm, Resolver } from "react-hook-form";
@@ -177,48 +177,46 @@ export default function Signin() {
         >
           Go to index
         </Button>
-
-        {localList && (
-          <div style={{ paddingTop: "10px", lineHeight: "210%" }}>
-            <div>Age: {localList.age}</div>
-            <div>bmi: {localList.bmi}</div>
-            <div>sex: {localList.sex}</div>
-            <hr />
-            <div>height: {localList.height.cm} cm</div>
-            <div>
-              height: {localList.height.feet.feet} feet{" "}
-              {localList.height.feet.inch} inch
-            </div>
-            <hr />
-            <div>weight: {localList.weight.kg} kg</div>
-            <div>weight: {localList.weight.pounds} pounds</div>
-            <hr />
-            <div>adjustedBodyWeight: {localList.adjustedBodyWeight.kg} kg</div>
-            <div>
-              adjustedBodyWeight: {localList.adjustedBodyWeight.pounds} pounds
-            </div>
-            <hr />
-            <div>
-              bloodVolumn: {localList.bloodVolumn.value}{" "}
-              {localList.bloodVolumn.unit}
-            </div>
-            <hr />
-            <div>bodyWaterWeight: {localList.bodyWaterWeight.kg} kg</div>
-            <div>
-              bodyWaterWeight: {localList.bodyWaterWeight.pounds} pounds
-            </div>
-            <hr />
-            <div>idealWeight: {localList.idealWeight.kg} kg</div>
-            <div>idealWeight: {localList.idealWeight.pounds} pounds</div>
-            <hr />
-            <div>leanBodyMass: {localList.leanBodyMass.kg} kg</div>
-            <div>leanBodyMass: {localList.leanBodyMass.pounds} pounds</div>
-            <hr />
-            <div>
-              RMR: {localList.rmr.value} {localList.rmr.unit}
-            </div>
-            <hr />
-            {/* <div>
+      </Link>
+      {localList && (
+        <div style={{ paddingTop: "10px", lineHeight: "210%" }}>
+          <div>Age: {localList.age}</div>
+          <div>bmi: {localList.bmi}</div>
+          <div>sex: {localList.sex}</div>
+          <hr />
+          <div>height: {localList.height.cm} cm</div>
+          <div>
+            height: {localList.height.feet.feet} feet{" "}
+            {localList.height.feet.inch} inch
+          </div>
+          <hr />
+          <div>weight: {localList.weight.kg} kg</div>
+          <div>weight: {localList.weight.pounds} pounds</div>
+          <hr />
+          <div>adjustedBodyWeight: {localList.adjustedBodyWeight.kg} kg</div>
+          <div>
+            adjustedBodyWeight: {localList.adjustedBodyWeight.pounds} pounds
+          </div>
+          <hr />
+          <div>
+            bloodVolumn: {localList.bloodVolumn.value}{" "}
+            {localList.bloodVolumn.unit}
+          </div>
+          <hr />
+          <div>bodyWaterWeight: {localList.bodyWaterWeight.kg} kg</div>
+          <div>bodyWaterWeight: {localList.bodyWaterWeight.pounds} pounds</div>
+          <hr />
+          <div>idealWeight: {localList.idealWeight.kg} kg</div>
+          <div>idealWeight: {localList.idealWeight.pounds} pounds</div>
+          <hr />
+          <div>leanBodyMass: {localList.leanBodyMass.kg} kg</div>
+          <div>leanBodyMass: {localList.leanBodyMass.pounds} pounds</div>
+          <hr />
+          <div>
+            RMR: {localList.rmr.value} {localList.rmr.unit}
+          </div>
+          <hr />
+          {/* <div>
               Waist Hip List: {whList} ** with waist: {waist}, hip: {hip}
             </div>
             <hr />
@@ -228,9 +226,8 @@ export default function Signin() {
             <div>
               MET: {met} METs ** with {minutes} minutes {seconds} seconds
             </div> */}
-          </div>
-        )}
-      </Link>
+        </div>
+      )}
     </form>
   );
 }

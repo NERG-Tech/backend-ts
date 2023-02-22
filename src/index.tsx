@@ -7,6 +7,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SignUp from "./routes/SignUp";
 import SignIn from "./routes/SignIn";
 import AddPlayer from "./routes/AddPlayer";
+import AddWaistHip from "./routes/AddWaistHip";
+
 import ShowPlayer from "./routes/ShowPlayer";
 
 const root = ReactDOM.createRoot(
@@ -20,6 +22,7 @@ root.render(
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/add-player" element={<AddPlayer />} />
+        <Route path="/add-waist-hip" element={<AddWaistHip />} />
         <Route path="/show-player" element={<ShowPlayer />} />
       </Routes>
     </BrowserRouter>
