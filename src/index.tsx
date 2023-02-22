@@ -10,6 +10,7 @@ import AddPlayer from "./routes/AddPlayer";
 import AddWaistHip from "./routes/AddWaistHip";
 import AddVo2 from "./routes/AddVo2";
 import ShowPlayer from "./routes/ShowPlayer";
+import AddMET from "./routes/AddMET";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -25,6 +26,7 @@ root.render(
         <Route path="/add-waist-hip" element={<AddWaistHip />} />
         <Route path="/show-player" element={<ShowPlayer />} />
         <Route path="/add-vo2" element={<AddVo2 />} />
+        <Route path="/add-met" element={<AddMET />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

@@ -7,12 +7,14 @@ import * as Types from "../@types";
 
 export default function ShowPlayer() {
   const [error, setError] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
   const [localList, setList] = React.useState<Types.localListType>();
 
   let user: Types.User = JSON.parse(localStorage.getItem("@user") || "{}");
   console.log(user);
 
   const getPlayer = async () => {
+    setLoading(true);
     let token: Types.tokenType = { accessToken: user.accessToken };
 
     if (user.accessToken) {
@@ -26,6 +28,7 @@ export default function ShowPlayer() {
     } else {
       setError("Please log in to add information");
     }
+    setLoading(false);
   };
 
   return (
@@ -51,11 +54,17 @@ export default function ShowPlayer() {
       </Button>
       <Box sx={{ pt: 2 }}>{error && error}</Box>
       <Box sx={{ pt: 3, width: "400px" }}>
-        {localList && (
+        <Box sx={{ fontSize: "32px", pt: 3 }}>
+          {loading ? <Box>...Laoding</Box> : ""}
+        </Box>
+        {localList && !loading && (
           <div style={{ paddingTop: "10px", lineHeight: "210%" }}>
             <div>Age: {localList.age}</div>
             <div>bmi: {localList.bmi}</div>
             <div>sex: {localList.sex}</div>
+            <div>name: {localList.name}</div>
+            <div>sport: {localList.sport}</div>
+            <div>position: {localList.position}</div>
             <hr />
             <div>height: {localList.height.cm} cm</div>
             <div>

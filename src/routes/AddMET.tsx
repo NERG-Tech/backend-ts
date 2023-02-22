@@ -1,16 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useForm, Resolver } from "react-hook-form";
 import * as apiService from "../api-service";
 import * as Types from "../@types";
+import axios from "axios";
 
 const resolver: Resolver<FormValues> = async (values) => {
   return {
-    values: values.pulse ? values : {},
-    errors: !values.pulse
+    values: values.minutes && values.seconds ? values : {},
+    errors: !values.minutes
       ? {
-          pulse: {
+          minutes: {
+            type: "required",
+            message: "This is required.",
+          },
+        }
+      : !values.seconds
+      ? {
+          seconds: {
             type: "required",
             message: "This is required.",
           },
@@ -20,14 +28,14 @@ const resolver: Resolver<FormValues> = async (values) => {
 };
 
 type FormValues = {
-  pulse: number;
-  hip: number;
+  minutes: number;
+  seconds: number;
 };
 
-type vo2Type = { pulse: number; vo2: number; unit: string };
-type localListType = { vo2: vo2Type };
+type metType = { value: number; unit: string };
+type localListType = { met: metType };
 
-export default function AddpulseHip() {
+export default function Addminutesseconds() {
   const [error, setError] = React.useState("");
   const [localList, setList] = React.useState<localListType>();
 
@@ -39,10 +47,9 @@ export default function AddpulseHip() {
   } = useForm<FormValues>({ resolver });
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log({ ...data });
     if (user.accessToken) {
       await apiService
-        .addVo2(data.pulse, user.accessToken)
+        .getMET(data.minutes, data.seconds, user.accessToken)
         .then((result) => {
           console.log("result", result);
           if (result) setList(result.list);
@@ -52,6 +59,18 @@ export default function AddpulseHip() {
       setError("Please log in to add information");
     }
   });
+
+  //   useEffect(() => {
+  //     axios
+  //       .get(
+  //         `https://oauth2.googleapis.com/tokeninfo?id_token=${user.accessToken}`
+  //       )
+  //       .then((result) => {
+  //         console.log(result);
+  //       });
+
+  //     return () => {};
+  //   }, []);
 
   return (
     <form
@@ -67,11 +86,18 @@ export default function AddpulseHip() {
     >
       <Box sx={{ color: "red", pb: 3 }}>{error && error}</Box>
       <input
-        {...register("pulse")}
-        placeholder="pulse"
+        {...register("minutes")}
+        placeholder="minutes"
         style={{ width: "200px", height: "30px" }}
       />
-      {errors?.pulse && <p>{errors.pulse.message}</p>}
+      {errors?.minutes && <p>{errors.minutes.message}</p>}
+
+      <input
+        {...register("seconds")}
+        placeholder="seconds"
+        style={{ width: "200px", height: "30px", marginTop: "10px" }}
+      />
+      {errors?.seconds && <p>{errors.seconds.message}</p>}
 
       <Button
         type="submit"
@@ -90,10 +116,8 @@ export default function AddpulseHip() {
       <div>
         {localList && (
           <Box sx={{ pt: 3, lineHeight: "180%" }}>
-            <Box>Pulse (input): {localList.vo2.pulse}</Box>
             <Box>
-              vo2 (result) is based on pulse and age: {localList.vo2.vo2}{" "}
-              {localList.vo2.unit}
+              {localList.met.value} {localList.met.unit}
             </Box>
           </Box>
         )}

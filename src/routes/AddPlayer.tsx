@@ -39,6 +39,7 @@ type FormValues = {
 export default function Signin() {
   const [error, setError] = React.useState("");
   const [localList, setList] = React.useState<Types.localListType>();
+  const [loading, setLoading] = React.useState(false);
 
   let user: Types.User = JSON.parse(localStorage.getItem("@user") || "{}");
   const {
@@ -48,6 +49,7 @@ export default function Signin() {
   } = useForm<FormValues>({ resolver });
 
   const onSubmit = handleSubmit(async (data) => {
+    setLoading(true);
     // console.log({ ...data });
     if (user.accessToken) {
       await apiService
@@ -69,6 +71,7 @@ export default function Signin() {
     } else {
       setError("Please log in to add information");
     }
+    setLoading(false);
   });
 
   return (
@@ -149,11 +152,17 @@ export default function Signin() {
           Go to index
         </Button>
       </Link>
-      {localList && (
+      <Box sx={{ fontSize: "32px", pt: 3 }}>
+        {loading ? <Box>...Laoding</Box> : ""}
+      </Box>
+      {localList && !loading && (
         <div style={{ paddingTop: "10px", lineHeight: "210%" }}>
           <div>Age: {localList.age}</div>
           <div>bmi: {localList.bmi}</div>
           <div>sex: {localList.sex}</div>
+          <div>name: {localList.name}</div>
+          <div>sport: {localList.sport}</div>
+          <div>position: {localList.position}</div>
           <hr />
           <div>height: {localList.height.cm} cm</div>
           <div>
@@ -187,16 +196,6 @@ export default function Signin() {
             RMR: {localList.rmr.value} {localList.rmr.unit}
           </div>
           <hr />
-          {/* <div>
-              Waist Hip List: {whList} ** with waist: {waist}, hip: {hip}
-            </div>
-            <hr />
-            <div>
-              Vo2 Max: {vo2} ml/kg/min ** with beats: {beats} per 20 seconds
-            </div>
-            <div>
-              MET: {met} METs ** with {minutes} minutes {seconds} seconds
-            </div> */}
         </div>
       )}
     </form>

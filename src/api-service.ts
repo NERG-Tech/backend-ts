@@ -8,11 +8,14 @@ export async function signIn({ email, password }: signInType) {
   const url = `${apiUrl}/login`;
   const res = await axios.post(url, { email, password });
 
+  console.log(res);
   localStorage.setItem(
     "@user",
     JSON.stringify({
       uid: res.data.uid.user.uid,
       accessToken: res.data.uid.user.stsTokenManager.accessToken,
+      expirationTime: res.data.uid.user.stsTokenManager.expirationTime,
+      refreshToken: res.data.uid.user.stsTokenManager.refreshToken,
     })
   );
   return res.data;
@@ -26,6 +29,7 @@ export async function signUp(obj: {
   const url = `${apiUrl}/register`;
   const res = await axios.post(url, obj);
 
+  console.log(res);
   localStorage.setItem(
     "@user",
     JSON.stringify({
@@ -71,6 +75,10 @@ export async function addPlayer(obj: {
   if (obj.accessToken) {
     try {
       res = await axios.post(url, {
+        ...obj,
+        idToken: obj.accessToken,
+      });
+      console.log({
         ...obj,
         idToken: obj.accessToken,
       });
@@ -157,16 +165,21 @@ export async function addVo2(pulse: number, accessToken: string) {
   }
 }
 
-export async function getMET(minutes: number, seconds: number) {
+export async function getMET(
+  minutes: number,
+  seconds: number,
+  accessToken: string
+) {
   const url = `${apiUrl}/player/met`;
-  let obj = { minutes, seconds };
-  let res;
+  let obj = { minutes, seconds, idToken: accessToken };
+  console.log(obj);
 
   try {
-    res = await axios.post(url, obj);
+    let res = await axios.post(url, obj);
     return res.data;
   } catch (error: any) {
     console.error(error.data);
+    return error.data;
   }
 }
 

@@ -44,6 +44,10 @@ function App() {
         <Link to="/add-vo2">
           <Button sx={{ border: "1px solid lightgrey", ml: 1 }}>Add vo2</Button>
         </Link>
+
+        <Link to="/add-met">
+          <Button sx={{ border: "1px solid lightgrey", ml: 1 }}>Add MET</Button>
+        </Link>
       </Box>
     </Box>
   );
