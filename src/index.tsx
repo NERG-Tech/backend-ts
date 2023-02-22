@@ -8,7 +8,7 @@ import SignUp from "./routes/SignUp";
 import SignIn from "./routes/SignIn";
 import AddPlayer from "./routes/AddPlayer";
 import AddWaistHip from "./routes/AddWaistHip";
-
+import AddVo2 from "./routes/AddVo2";
 import ShowPlayer from "./routes/ShowPlayer";
 
 const root = ReactDOM.createRoot(
@@ -24,6 +24,7 @@ root.render(
         <Route path="/add-player" element={<AddPlayer />} />
         <Route path="/add-waist-hip" element={<AddWaistHip />} />
         <Route path="/show-player" element={<ShowPlayer />} />
+        <Route path="/add-vo2" element={<AddVo2 />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

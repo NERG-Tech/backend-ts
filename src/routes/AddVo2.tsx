@@ -7,17 +7,10 @@ import * as Types from "../@types";
 
 const resolver: Resolver<FormValues> = async (values) => {
   return {
-    values: values.waist && values.hip ? values : {},
-    errors: !values.waist
+    values: values.pulse ? values : {},
+    errors: !values.pulse
       ? {
-          waist: {
-            type: "required",
-            message: "This is required.",
-          },
-        }
-      : !values.hip
-      ? {
-          hip: {
+          pulse: {
             type: "required",
             message: "This is required.",
           },
@@ -27,12 +20,12 @@ const resolver: Resolver<FormValues> = async (values) => {
 };
 
 type FormValues = {
-  waist: number;
+  pulse: number;
   hip: number;
 };
 
-type localListType = { waist: number; hip: number; ratio: number };
-export default function AddWaistHip() {
+type localListType = { pulse: number; hip: number; ratio: number };
+export default function AddpulseHip() {
   const [error, setError] = React.useState("");
   const [localList, setList] = React.useState<localListType>();
 
@@ -44,12 +37,13 @@ export default function AddWaistHip() {
   } = useForm<FormValues>({ resolver });
 
   const onSubmit = handleSubmit(async (data) => {
+    console.log({ ...data });
     if (user.accessToken) {
       await apiService
-        .addWaistAndHip(data.waist, data.hip, user.accessToken)
+        .addVo2(data.pulse, user.accessToken)
         .then((result) => {
           console.log("result", result);
-          if (result) setList(result.ratio);
+          if (result) setList(result);
         })
         .catch((error) => console.log(error));
     } else {
@@ -71,18 +65,11 @@ export default function AddWaistHip() {
     >
       <Box sx={{ color: "red", pb: 3 }}>{error && error}</Box>
       <input
-        {...register("waist")}
-        placeholder="waist"
+        {...register("pulse")}
+        placeholder="pulse"
         style={{ width: "200px", height: "30px" }}
       />
-      {errors?.waist && <p>{errors.waist.message}</p>}
-
-      <input
-        {...register("hip")}
-        placeholder="hip"
-        style={{ width: "200px", height: "30px", marginTop: "10px" }}
-      />
-      {errors?.hip && <p>{errors.hip.message}</p>}
+      {errors?.pulse && <p>{errors.pulse.message}</p>}
 
       <Button
         type="submit"
@@ -101,9 +88,9 @@ export default function AddWaistHip() {
       <div>
         {localList && (
           <Box sx={{ pt: 3, lineHeight: "180%" }}>
-            <Box>Hip: {localList.hip}</Box>
-            <Box>Waist: {localList.waist}</Box>
-            <Box>Ratio: {localList.ratio}</Box>
+            {/* <Box>Hip: {localList.hip}</Box>
+            <Box>pulse: {localList.pulse}</Box>
+            <Box>Ratio: {localList.ratio}</Box> */}
           </Box>
         )}
       </div>

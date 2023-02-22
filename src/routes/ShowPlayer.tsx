@@ -43,7 +43,10 @@ export default function ShowPlayer() {
           Go back to index page
         </Button>
       </Link>
-      <Button sx={{ border: "1px solid lightgrey", mt: 2 }} onClick={getPlayer}>
+      <Button
+        sx={{ border: "1px solid lightgrey", mt: 2, color: "green" }}
+        onClick={getPlayer}
+      >
         Get User Info From DB
       </Button>
       <Box sx={{ pt: 2 }}>{error && error}</Box>
@@ -88,10 +91,7 @@ export default function ShowPlayer() {
               RMR: {localList.rmr.value} {localList.rmr.unit}
             </div>
             <hr />
-            {/* <div>
-              Waist Hip List: {whList} ** with waist: {waist}, hip: {hip}
-            </div>
-            <hr />
+            {/*  
             <div>
               Vo2 Max: {vo2} ml/kg/min ** with beats: {beats} per 20 seconds
             </div>

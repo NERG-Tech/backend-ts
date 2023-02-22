@@ -144,9 +144,9 @@ export async function revokeToken(uid: string) {
   return res.data;
 }
 
-export async function getVo2(pulse: number) {
+export async function addVo2(pulse: number, accessToken: string) {
   const url = `${apiUrl}/player/vo2`;
-  let obj = { pulse };
+  let obj = { pulse, idToken: accessToken };
   let res;
 
   try {
