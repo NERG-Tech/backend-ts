@@ -55,6 +55,11 @@ function App() {
               Add Genetics
             </Button>
           </Link>
+          <Link to="/add-key-measurements">
+            <Button sx={{ border: "1px solid lightgrey", ml: 1 }}>
+              Add Key Measurements
+            </Button>
+          </Link>
           <Link to="/user-token-status">
             <Button sx={{ border: "1px solid lightgrey", ml: 1 }}>
               Check User Token Status

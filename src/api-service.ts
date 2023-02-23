@@ -213,7 +213,8 @@ export async function getKeyMeasurements(
   handSize: number,
   hipsCircumference: number,
   gluteCircumference: number,
-  waistCircumference: number
+  waistCircumference: number,
+  accessToken: string
 ) {
   const url = `${apiUrl}/player/key`;
   let obj = {
@@ -223,6 +224,7 @@ export async function getKeyMeasurements(
     hipsCircumference,
     gluteCircumference,
     waistCircumference,
+    idToken: accessToken,
   };
   let res;
 

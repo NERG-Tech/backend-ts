@@ -13,6 +13,7 @@ import ShowPlayer from "./routes/ShowPlayer";
 import AddMET from "./routes/AddMET";
 import UserTokenStatus from "./routes/UserTokenStatus";
 import AddGenetics from "./routes/AddGenetics";
+import AddKeyMeasurement from "./routes/AddKeyMeasurement";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -30,6 +31,7 @@ root.render(
         <Route path="/add-vo2" element={<AddVo2 />} />
         <Route path="/add-met" element={<AddMET />} />
         <Route path="/add-genetics" element={<AddGenetics />} />
+        <Route path="/add-key-measurements" element={<AddKeyMeasurement />} />
 
         <Route path="/user-token-status" element={<UserTokenStatus />} />
       </Routes>
