@@ -187,6 +187,26 @@ export async function getMET(
   }
 }
 
+//ethnicity, complexion, bloodType
+export async function getGenetics(
+  ethnicity: string,
+  complexion: string,
+  bloodType: string,
+  accessToken: string
+) {
+  const url = `${apiUrl}/player/genetic`;
+  let obj = { ethnicity, complexion, bloodType, idToken: accessToken };
+  console.log(obj);
+
+  try {
+    let res = await axios.post(url, obj);
+    return res.data;
+  } catch (error: any) {
+    console.error(error.data);
+    return error.data;
+  }
+}
+
 export async function getKeyMeasurements(
   neckCircumference: number,
   wingSpan: number,

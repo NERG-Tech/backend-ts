@@ -153,7 +153,7 @@ export default function Signin() {
         </Button>
       </Link>
       <Box sx={{ fontSize: "32px", pt: 3 }}>
-        {loading ? <Box>...Laoding</Box> : ""}
+        {loading ? <Box>...Loading</Box> : ""}
       </Box>
       {localList && !loading && (
         <div style={{ paddingTop: "10px", lineHeight: "210%" }}>

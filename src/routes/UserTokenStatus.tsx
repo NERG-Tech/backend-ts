@@ -22,8 +22,8 @@ const UserTokenStatus = () => {
   const setNow = () => {
     let today = new Date(nowInMilliseconds);
     setToday(today.toString());
-    // console.log("today", today);
   };
+  const refresh = () => {};
 
   useEffect(() => {
     const expirationTime = user.expirationTime;
@@ -33,10 +33,6 @@ const UserTokenStatus = () => {
     } else {
       setStatus("&#128562; NOT expired");
     }
-
-    // console.log("expirationTime", expirationTime);
-    // console.log("Date.now()", nowInMilliseconds);
-
     let exp = new Date(expirationTime);
     setExpire(exp.toString());
     console.log("exp", exp);
@@ -53,6 +49,10 @@ const UserTokenStatus = () => {
       </Box>
       <Box sx={{ pt: 3 }}>Expire At: {expire}</Box>
       <Box>Now: {today}</Box>
+
+      <Button onClick={refresh} sx={{ border: "1px solid lightgrey", mt: 2 }}>
+        Refresh Token
+      </Button>
 
       <Link to="/">
         <Button sx={{ border: "1px solid lightgrey", mt: 2 }}>

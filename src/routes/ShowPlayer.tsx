@@ -55,7 +55,7 @@ export default function ShowPlayer() {
       <Box sx={{ pt: 2 }}>{error && error}</Box>
       <Box sx={{ pt: 3, width: "400px" }}>
         <Box sx={{ fontSize: "32px", pt: 3 }}>
-          {loading ? <Box>...Laoding</Box> : ""}
+          {loading ? <Box>...Loading</Box> : ""}
         </Box>
         {localList && !loading && (
           <div style={{ paddingTop: "10px", lineHeight: "210%" }}>
