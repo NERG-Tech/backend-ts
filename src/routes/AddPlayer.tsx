@@ -75,7 +75,7 @@ export default function Signin() {
           accessToken: user.accessToken,
         })
         .then((result) => {
-          console.log(result);
+          console.log("result", result);
           setList(result.list);
         })
         .catch((error) => console.log(error));
