@@ -149,11 +149,11 @@ export async function addWaistAndHip(
 }
 
 // signout
-export async function revokeToken(uid: string) {
+export async function revokeToken(idToken: string) {
   localStorage.removeItem("@user");
-  const url = `${apiUrl}/user/revoke/${uid}`;
+  const url = `${apiUrl}/user/revoke`;
   const res = await axios.post(url, {
-    uid: uid,
+    idToken,
   });
 
   return res.data;

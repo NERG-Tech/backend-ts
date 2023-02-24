@@ -73,8 +73,9 @@ export default function Signup() {
 
   const signOut = async () => {
     setLoading(true);
+    console.log(" .revokeToken(user.accessToken)", user.accessToken);
     apiService
-      .revokeToken(user.uid)
+      .revokeToken(user.accessToken)
       .then((result) => {
         console.log("Revoke token", result);
         navigate("/");
