@@ -60,11 +60,11 @@ function App() {
               Add Key Measurements
             </Button>
           </Link>
-          <Link to="/user-token-status">
+          {/* <Link to="/user-token-status">
             <Button sx={{ border: "1px solid lightgrey", ml: 1 }}>
               Check User Token Status
             </Button>
-          </Link>
+          </Link> */}
         </Box>
       </Box>
     </Box>

@@ -5,6 +5,7 @@ export type User = {
   expirationTime: number;
   expired: number;
   refreshToken: string;
+  // accessToken: string;
 };
 export type tokenType = {
   accessToken: string;

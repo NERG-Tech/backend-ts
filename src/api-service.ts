@@ -12,11 +12,12 @@ export async function signIn({ email, password }: signInType) {
   localStorage.setItem(
     "@user",
     JSON.stringify({
-      uid: res.data.uid.user.uid,
-      accessToken: res.data.uid.user.stsTokenManager.accessToken,
-      expirationTime: res.data.uid.user.stsTokenManager.expirationTime,
-      refreshToken: res.data.uid.user.stsTokenManager.refreshToken,
-      expired: res.data.uid._tokenResponse.expiresIn,
+      // uid: res.data.uid.user.uid,
+      // accessToken: res.data.uid.user.stsTokenManager.accessToken,
+      // expirationTime: res.data.uid.user.stsTokenManager.expirationTime,
+      // refreshToken: res.data.uid.user.stsTokenManager.refreshToken,
+      // expired: res.data.uid._tokenResponse.expiresIn,
+      accessToken: res.data.customToken,
     })
   );
   return res.data;
@@ -34,11 +35,11 @@ export async function signUp(obj: {
   localStorage.setItem(
     "@user",
     JSON.stringify({
-      uid: res.data.uid.user.uid,
-      accessToken: res.data.uid.user.stsTokenManager.accessToken,
-      expirationTime: res.data.uid.user.stsTokenManager.expirationTime,
-      refreshToken: res.data.uid.user.stsTokenManager.refreshToken,
-      expired: res.data.uid._tokenResponse.expiresIn,
+      // uid: res.data.uid.user.uid,
+      accessToken: res.data.customToken,
+      // expirationTime: res.data.uid.user.stsTokenManager.expirationTime,
+      // refreshToken: res.data.uid.user.stsTokenManager.refreshToken,
+      // expired: res.data.uid._tokenResponse.expiresIn,
     })
   );
   return res.data;
@@ -78,14 +79,16 @@ export async function addPlayer(obj: {
   let res;
   if (obj.accessToken) {
     try {
+      console.log("Inside addPlayer ", {
+        ...obj,
+        idToken: obj.accessToken,
+      });
+
       res = await axios.post(url, {
         ...obj,
         idToken: obj.accessToken,
       });
-      console.log({
-        ...obj,
-        idToken: obj.accessToken,
-      });
+
       console.log(res);
       return res.data;
     } catch (error: any) {

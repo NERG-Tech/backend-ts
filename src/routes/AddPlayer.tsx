@@ -50,6 +50,17 @@ export default function Signin() {
 
   const onSubmit = handleSubmit(async (data) => {
     setLoading(true);
+
+    console.log({
+      sex: data.sex,
+      age: parseFloat(data.age + ""),
+      weight: parseFloat(data.weight + ""),
+      height: parseFloat(data.height + ""),
+      name: data.name,
+      sport: data.sport,
+      position: data.position,
+      accessToken: user.accessToken,
+    });
     // console.log({ ...data });
     if (user.accessToken) {
       await apiService
