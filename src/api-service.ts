@@ -12,11 +12,6 @@ export async function signIn({ email, password }: signInType) {
   localStorage.setItem(
     "@user",
     JSON.stringify({
-      // uid: res.data.uid.user.uid,
-      // accessToken: res.data.uid.user.stsTokenManager.accessToken,
-      // expirationTime: res.data.uid.user.stsTokenManager.expirationTime,
-      // refreshToken: res.data.uid.user.stsTokenManager.refreshToken,
-      // expired: res.data.uid._tokenResponse.expiresIn,
       accessToken: res.data.customToken,
     })
   );
@@ -35,11 +30,7 @@ export async function signUp(obj: {
   localStorage.setItem(
     "@user",
     JSON.stringify({
-      // uid: res.data.uid.user.uid,
       accessToken: res.data.customToken,
-      // expirationTime: res.data.uid.user.stsTokenManager.expirationTime,
-      // refreshToken: res.data.uid.user.stsTokenManager.refreshToken,
-      // expired: res.data.uid._tokenResponse.expiresIn,
     })
   );
   return res.data;
@@ -85,6 +76,35 @@ export async function addPlayer(obj: {
       });
 
       res = await axios.post(url, {
+        ...obj,
+        idToken: obj.accessToken,
+      });
+
+      console.log(res);
+      return res.data;
+    } catch (error: any) {
+      console.error(error.data);
+    }
+  } else {
+    return "no-access";
+  }
+}
+
+export async function updatePlayer(obj: {
+  sex: string;
+  age: number;
+  weight: number;
+  height: number;
+  name: string;
+  sport: string;
+  position: string;
+  accessToken: string;
+}) {
+  const url = `${apiUrl}/player`;
+  let res;
+  if (obj.accessToken) {
+    try {
+      res = await axios.put(url, {
         ...obj,
         idToken: obj.accessToken,
       });

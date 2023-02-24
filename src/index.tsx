@@ -11,7 +11,7 @@ import AddWaistHip from "./routes/AddWaistHip";
 import AddVo2 from "./routes/AddVo2";
 import ShowPlayer from "./routes/ShowPlayer";
 import AddMET from "./routes/AddMET";
-// import UserTokenStatus from "./routes/UserTokenStatus";
+import UpdatePlayer from "./routes/UpdatePlayer";
 import AddGenetics from "./routes/AddGenetics";
 import AddKeyMeasurement from "./routes/AddKeyMeasurement";
 
@@ -26,14 +26,13 @@ root.render(
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/add-player" element={<AddPlayer />} />
+        <Route path="/update-player" element={<UpdatePlayer />} />
         <Route path="/add-waist-hip" element={<AddWaistHip />} />
         <Route path="/show-player" element={<ShowPlayer />} />
         <Route path="/add-vo2" element={<AddVo2 />} />
         <Route path="/add-met" element={<AddMET />} />
         <Route path="/add-genetics" element={<AddGenetics />} />
         <Route path="/add-key-measurements" element={<AddKeyMeasurement />} />
-
-        {/* <Route path="/user-token-status" element={<UserTokenStatus />} /> */}
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
