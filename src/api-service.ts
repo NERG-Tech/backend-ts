@@ -102,6 +102,11 @@ export async function updatePlayer(obj: {
 }) {
   const url = `${apiUrl}/player`;
   let res;
+
+  console.log({
+    ...obj,
+    idToken: obj.accessToken,
+  });
   if (obj.accessToken) {
     try {
       res = await axios.put(url, {
@@ -120,25 +125,17 @@ export async function updatePlayer(obj: {
 }
 
 export async function getPlayer(accessToken: Types.tokenType) {
-  const url = `${apiUrl}/player/${accessToken.accessToken}`;
-  const options = {
-    method: "GET",
-    url: url,
-  };
+  const url = `${apiUrl}/player`;
   let res;
 
   if (accessToken) {
-    await axios
-      .request(options)
-      .then(function (response: any) {
-        console.log("response.data player", response.data.player);
-        res = response.data.player;
-      })
-      .catch(function (error: any) {
-        // console.error(error);
-        res = error;
-      });
-    return res;
+    const res = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken.accessToken}`,
+      },
+    });
+
+    return res.data.player;
   } else {
     return "no-access";
   }
@@ -219,6 +216,7 @@ export async function getGenetics(
 ) {
   const url = `${apiUrl}/player/genetic`;
   let obj = { ethnicity, complexion, bloodType, idToken: accessToken };
+
   console.log(obj);
 
   try {

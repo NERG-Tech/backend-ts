@@ -90,6 +90,7 @@ export default function Signin() {
         .then((result) => {
           console.log("result", result);
           setList(result.list);
+          getUserFromDB();
         })
         .catch((error) => console.log(error));
     } else {
@@ -110,6 +111,9 @@ export default function Signin() {
         paddingTop: "30px",
       }}
     >
+      <Box sx={{ fontSize: "32px", pt: 3 }}>
+        {loading ? <Box>...Getting the player information</Box> : ""}
+      </Box>
       {localList && !loading && (
         <div
           style={{ paddingTop: "10px", lineHeight: "210%", color: "#191970" }}
@@ -199,9 +203,6 @@ export default function Signin() {
           Go to index
         </Button>
       </Link>
-      <Box sx={{ fontSize: "32px", pt: 3 }}>
-        {loading ? <Box>...Loading</Box> : ""}
-      </Box>
     </form>
   );
 }

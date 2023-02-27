@@ -20,6 +20,7 @@ export default function ShowPlayer() {
     if (user.accessToken) {
       await apiService.getPlayer(token).then((res) => {
         if (res !== "no-access") {
+          console.log("getPlayer res", res);
           setList(res);
         } else {
           setError("Your token is expired. Please log in again.");
@@ -30,6 +31,8 @@ export default function ShowPlayer() {
     }
     setLoading(false);
   };
+
+  console.log("localList >> ", localList);
 
   return (
     <Box
